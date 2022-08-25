@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService {
@@ -31,6 +32,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     public Empleado guardar(Empleado empleado) {
+        if(empleado.getId() == null || empleado.getId().isEmpty()){
+            empleado.setId(String.valueOf(Math.abs(ThreadLocalRandom.current().nextInt())));
+        }
         return empleadoDao.save(empleado);
     }
 
